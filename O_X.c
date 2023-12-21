@@ -1,4 +1,4 @@
-#include "o_x.h"
+#include "O_X.h"
 
 /**
  * main - program
