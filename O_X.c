@@ -11,10 +11,8 @@ int main(void)
 	size_t len = 0;
 	char *arg[] = {NULL};
 
-	printf("::(O_X) SHELL::\n\t^d to exit\n");
 	while (1)
 	{
-		printf("(O_X)");
 		size = getline(&buff, &len, stdin);
 		if (size == -1)
 			exit(0);
