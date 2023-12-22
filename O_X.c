@@ -8,7 +8,7 @@ char **environ;
 
 int main(void)
 {
-	char *buff = NULL, *token = NULL;
+	char *buff = NULL;
 	int size = 1, kiddo = 0, stat = 0;
 	char *arg[] = {"" ,NULL};
 	size_t len = 33;
@@ -25,19 +25,14 @@ int main(void)
 		else if (buff[size - 1] == '\n')
 			buff[size - 1] = '\0';
 
-		token = strtok(buff, " ");
-
-		while(token != NULL)
-		{
-			token = strtok(NULL, " ");
-		}
-
 
 		kiddo = fork();
 		if (kiddo == -1)
 			printf("Process error!\n");
 		if (kiddo == 0)
 		{
+			if (buff[0] == ' ')
+				return (0);
 			execve(buff, arg, environ);
 			return (0);
 		}
