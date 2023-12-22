@@ -10,7 +10,6 @@ int isdash(char *str,char *arg[])
 {
 	if(str[0] == '/')
 		execve(str, arg, environ);
-	return (0);
 }
 
 int main(void)
