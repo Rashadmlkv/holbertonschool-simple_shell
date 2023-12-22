@@ -6,10 +6,10 @@
  */
 int main(int ac, char **av, char **env)
 {
-	char *buff;
+	char *buff = NULL;
 	int size = 1, kiddo = 0, stat = 0;
 	char *arg[] = {"" ,NULL};
-	size_t len = 0;
+	size_t len;
 	(void)ac;
 	(void)av;
 	(void)*env;
@@ -37,5 +37,6 @@ int main(int ac, char **av, char **env)
 			wait(&stat);
 		}
 	}
+	free(buff);
 	return (0);
 }
