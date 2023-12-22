@@ -44,6 +44,7 @@ int main(void)
 			while (token != NULL)
 			{
 				isdash(token, arg);
+				token = strtok(NULL, "\n");
 			}
 		}
 		else
