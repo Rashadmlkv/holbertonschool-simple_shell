@@ -38,9 +38,8 @@ int main(void)
 		if (kiddo == 0)
 		{
 			if (buff[0] != '/')
-		        	return (0);
+			  buff++;
 		        execve(buff, arg, environ);
-			buff++;
 			return (0);
 		}
 		else
