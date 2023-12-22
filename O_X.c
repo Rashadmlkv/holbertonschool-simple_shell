@@ -6,19 +6,22 @@
  */
 char **environ;
 
-int isdash(char *str,char *arg[])
+int isdash(char *str,char *argv[])
 {
 	if(str[0] == '/')
-		execve(str, arg, environ);
+		execve(str, argv, environ);
 	return (0);
 }
 
-int main(void)
+int main(int ac, char **av, char **env)
 {
 	char *buff = NULL, *token = NULL;
 	int size = 1, kiddo = 0, stat = 0;
 	char *arg[] = {"" ,NULL};
 	size_t len = 33;
+	(void)ac;
+	(void)av;
+	(void)env;
 	while (1)
 	{
 		size = getline(&buff, &len, stdin);
