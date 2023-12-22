@@ -30,7 +30,6 @@ int main(int ac, char **av, char **env)
 		if (kiddo == 0)
 		{
 			execve(buff, arg, env);
-			printf("./O_X: 1: %s: not found \n", buff);
 			return (0);
 		}
 		else
