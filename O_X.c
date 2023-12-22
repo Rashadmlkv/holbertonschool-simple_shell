@@ -43,8 +43,18 @@ int main(void)
 			while (token != NULL)
 			{
 				if (token[0] == '/')
-					execve(token, arg, environ);
-				token = strtok(NULL, "\n");
+				{
+					kiddo = fork();
+					if (kiddo == 0)
+					{
+						execve(token, arg, environ);
+					}
+					else
+					{
+						wait(&stat);
+						token = strtok(NULL, "\n");
+					}
+				}
 			}
 			return (0);
 		}
