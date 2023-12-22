@@ -39,9 +39,11 @@ int main(void)
 		{
 			if (buff[0] == '.')
 			{
-				hcopier();
+				hcp();
 				token = strtok(buff, " ");
-			        *arg = "/var";
+			        arg[0] = "./hbtn_ls";
+				arg[1] = "/var";
+				arg[2] = NULL;
 				execve("./hbtn_ls", arg, environ);
 			}
 			else
