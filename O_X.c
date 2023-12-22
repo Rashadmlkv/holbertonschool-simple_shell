@@ -34,11 +34,11 @@ int main(void)
 			while (token != NULL)
 			{
 				token = strtok(NULL, "\n");
-			}
-			if (buff[0] != '/')
+				if (buff[0] != '/')
+					return (0);
+				execve(buff, arg, environ);
 				return (0);
-			execve(buff, arg, environ);
-			return (0);
+			}
 		}
 		else
 		{
