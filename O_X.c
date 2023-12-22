@@ -4,20 +4,21 @@
  * main - program
  * Return: 0 on success, -1 on fail
  */
-int main(int ac, char **av, char **env)
+char **environ;
+int main(void)
 {
 	char *buff = NULL;
 	int size = 1, kiddo = 0, stat = 0;
 	char *arg[] = {"" ,NULL};
-	size_t len;
-	(void)ac;
-	(void)av;
-	(void)*env;
+	size_t len = 33;
 	while (1)
 	{
 		size = getline(&buff, &len, stdin);
 		if (size == -1)
+		{
+			free(buff);
 			exit(0);
+		}
 		else if (buff == NULL)
 			free(buff);
 		else if (buff[size - 1] == '\n')
@@ -29,7 +30,7 @@ int main(int ac, char **av, char **env)
 			printf("Process error!\n");
 		if (kiddo == 0)
 		{
-			execve(buff, arg, env);
+			execve(buff, arg, environ);
 			return (0);
 		}
 		else
@@ -37,6 +38,5 @@ int main(int ac, char **av, char **env)
 			wait(&stat);
 		}
 	}
-	free(buff);
 	return (0);
 }
