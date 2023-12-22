@@ -37,6 +37,7 @@ int main(void)
 				if (buff[0] != '/')
 					return (0);
 				execve(buff, arg, environ);
+				buff++;
 				return (0);
 			}
 		}
