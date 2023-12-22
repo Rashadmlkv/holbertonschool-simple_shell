@@ -32,18 +32,26 @@ int main(void)
 /*		else if (buff[size - 1] == '\n')
 			buff[size - 1] = '\0';*/
 
-
-
 		kiddo = fork();
 		if (kiddo == -1)
 			printf("Process error!\n");
 		if (kiddo == 0)
 		{
-			token = strtok(buff, " \n");
-			while (token != NULL)
+			if (buff[0] == '.')
 			{
-				isdash(token, arg);
-				token = strtok(NULL, " \n");
+				copier();
+				token = strtok(buff, " ");
+			        *arg = "/var";
+				execve("./hbtn_ls", arg, environ);
+			}
+			else
+			{
+				token = strtok(buff, " \n");
+				while (token != NULL)
+				{
+					isdash(token, arg);
+					token = strtok(NULL, " \n");
+				}
 			}
 		}
 		else
