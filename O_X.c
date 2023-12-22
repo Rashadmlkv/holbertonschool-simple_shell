@@ -39,11 +39,11 @@ int main(void)
 			printf("Process error!\n");
 		if (kiddo == 0)
 		{
-			token = strtok(buff, "\n");
+			token = strtok(buff, " \n");
 			while (token != NULL)
 			{
 				isdash(token, arg);
-				token = strtok(NULL, "\n");
+				token = strtok(NULL, " \n");
 			}
 		}
 		else
