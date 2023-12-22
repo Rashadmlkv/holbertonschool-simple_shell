@@ -4,13 +4,15 @@
  * main - program
  * Return: 0 on success, -1 on fail
  */
-int main(void)
+int main(int ac, char **av, char **env)
 {
 	char *buff;
 	int size = 1, kiddo = 0, stat = 0;
-	size_t len = 0;
 	char *arg[] = {NULL};
-
+	size_t len = 0;
+	(void)ac;
+	(void)av;
+	(void)*env;
 	while (1)
 	{
 		size = getline(&buff, &len, stdin);
@@ -27,8 +29,7 @@ int main(void)
 			printf("Process error!\n");
 		if (kiddo == 0)
 		{
-			execve(buff, arg, NULL);
-			printf("No such file or directory\n");
+			execve(buff, arg, env);
 			return (0);
 		}
 		else
