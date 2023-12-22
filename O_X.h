@@ -8,5 +8,5 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-int hcopier(void);
+int hcp(void);
 #endif
