@@ -5,14 +5,14 @@
  * Return: 0 on success, -1 on fail
  */
 char **environ;
-/*
+
 int isdash(char *str,char *arg[])
 {
 	if(str[0] == '/')
 		execve(str, arg, environ);
 	return (0);
 }
-*/
+
 int main(void)
 {
 	char *buff = NULL, *token = NULL;
@@ -42,10 +42,7 @@ int main(void)
 			token = strtok(buff, "\n");
 			while (token != NULL)
 			{
-				if (token[0] == '/')
-				{
-					execve(token, arg, environ);
-				}
+				isdash(token, arg);
 				token = strtok(NULL, "\n");
 			}
 			return (0);
