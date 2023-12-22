@@ -10,6 +10,7 @@ int isdash(char *str,char *arg[])
 {
 	if(str[0] == '/')
 		execve(str, arg, environ);
+	return (0);
 }
 
 int main(void)
@@ -44,7 +45,6 @@ int main(void)
 				isdash(token, arg);
 				token = strtok(NULL, "\n");
 			}
-			return (0);
 		}
 		else
 		{
