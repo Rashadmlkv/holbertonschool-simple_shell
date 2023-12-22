@@ -8,7 +8,7 @@ int main(int ac, char **av, char **env)
 {
 	char *buff;
 	int size = 1, kiddo = 0, stat = 0;
-	char *arg[] = {NULL};
+	char *arg[] = {"" ,NULL};
 	size_t len = 0;
 	(void)ac;
 	(void)av;
