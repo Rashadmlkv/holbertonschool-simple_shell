@@ -31,7 +31,7 @@ int main(void)
 			printf("Process error!\n");
 		if (kiddo == 0)
 		{
-			if (buff[0] == ' ' || buff[0] == '\t')
+			if (buff[0] != '/')
 				return (0);
 			execve(buff, arg, environ);
 			return (0);
