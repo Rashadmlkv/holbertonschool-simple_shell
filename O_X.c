@@ -25,21 +25,23 @@ int main(void)
 /*		else if (buff[size - 1] == '\n')
 			buff[size - 1] = '\0';*/
 
+		token = strtok(buff, "\n");
+		while (token != NULL)
+		{
+			token = strtok(NULL, "\n");
+		}
+
+
 		kiddo = fork();
 		if (kiddo == -1)
 			printf("Process error!\n");
 		if (kiddo == 0)
 		{
-			token = strtok(buff, "\n");
-			while (token != NULL)
-			{
-				token = strtok(NULL, "\n");
-				if (buff[0] != '/')
-					return (0);
-				execve(buff, arg, environ);
-				buff++;
-				return (0);
-			}
+			if (buff[0] != '/')
+		        	return (0);
+		        execve(buff, arg, environ);
+			buff++;
+			return (0);
 		}
 		else
 		{
