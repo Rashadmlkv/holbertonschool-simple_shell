@@ -42,7 +42,8 @@ int main(void)
 			token = strtok(buff, "\n");
 			while (token != NULL)
 			{
-			        execve(token, arg, environ);
+				if (token[0] == '/')
+					execve(token, arg, environ);
 				token = strtok(NULL, "\n");
 			}
 			return (0);
