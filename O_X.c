@@ -6,6 +6,13 @@
  */
 char **environ;
 
+int isdash(char *str,char *arg[])
+{
+	if(str[0] == '/')
+		execve(str, arg, environ);
+	return (0);
+}
+
 int main(void)
 {
 	char *buff = NULL, *token = NULL;
@@ -25,11 +32,7 @@ int main(void)
 /*		else if (buff[size - 1] == '\n')
 			buff[size - 1] = '\0';*/
 
-		token = strtok(buff, "\n");
-		while (token != NULL)
-		{
-			token = strtok(NULL, "\n");
-		}
+	        
 
 
 		kiddo = fork();
@@ -37,10 +40,11 @@ int main(void)
 			printf("Process error!\n");
 		if (kiddo == 0)
 		{
-			if (buff[0] != '/')
-			  buff++;
-		        execve(buff, arg, environ);
-			return (0);
+			token = strtok(buff, "\n");
+			while (token != NULL)
+			{
+				isdash(token, arg);
+			}
 		}
 		else
 		{
