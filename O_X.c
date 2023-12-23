@@ -15,7 +15,7 @@ int isdash(char *str,char *argv[])
 
 int main(int ac, char **av, char **env)
 {
-	char *buff = NULL, *token = NULL;
+	char *buff = NULL, *token = NULL, *ext = "exit";
 	int size = 1, kiddo = 0, stat = 0;
 	char *arg[] = {"" ,NULL};
 	size_t len = 33;
@@ -25,7 +25,8 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		size = getline(&buff, &len, stdin);
-		if (size == -1)
+		token = strtok(buff, " \n");
+		if (size == -1 || *buff == *ext)
 		{
 			free(buff);
 			exit(0);
@@ -43,7 +44,6 @@ int main(int ac, char **av, char **env)
 			if (buff[0] == '.')
 			{
 				hcp();
-				token = strtok(buff, " ");
 			        arg[0] = "./hbtn_ls";
 				arg[1] = "/var";
 				arg[2] = NULL;
