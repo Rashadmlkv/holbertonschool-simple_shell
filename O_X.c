@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
-
+#include "O_X.h"
 /**
  * main - program
  * Return: 0 on success, -1 on fail
@@ -23,17 +15,17 @@ int exec(char *str,char *argv[])
 int main(int ac, char **av, char **env)
 {
 	char *buff = NULL, *token = NULL, *ext = "exit";
-	int size = 1, kiddo = 0, stat = 0;
+	int size = 1, kiddo = 0, stat = 0, incr;
 	char *arg[] = {"" ,NULL};
 	size_t len = 33;
 	(void)env;
 
-if (ac > 0)
+if (ac > 1)
 {
     buff = av[1];
-    for (;stat < ac; stat++)
+    for (incr = 0; incr < ac; incr++)
     {
-        arg[stat] = av[stat+1];
+        arg[incr] = av[incr+1];
     }
     exec(buff,arg);
 }
@@ -60,10 +52,13 @@ if (ac > 0)
 		{
 			if (buff[0] == '.')
 			{
-			        arg[0] = "./hbtn_ls";
-				arg[1] = "/var";
-				arg[2] = NULL;
-				execve("./hbtn_ls", arg, environ);
+				hcp();
+				for (incr = 0; incr < ac; incr++)
+				{
+					arg[incr] = av[incr+1];
+				}
+
+				execve(arg[0], arg, environ);
 			}
 			else
 			{
