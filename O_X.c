@@ -35,13 +35,17 @@ int main(int ac, char **av, char **env)
 		size = getline(&buff, &len, stdin);
 		if (access(buff, F_OK) == -1 && *buff != *ext)
 		{
+			free(buff);
 			perror("/bin/ls: cannot access '/test_hbtn'");
 			exit(2);
 		}
 		if (size == -1 || *buff == *ext)
 		{
+			free(buff);
 			exit(0);
 		}
+
+		token = strtok(buff, " \n");
 /*		else if (buff[size - 1] == '\n')
 			buff[size - 1] = '\0';*/
 		kiddo = fork();
