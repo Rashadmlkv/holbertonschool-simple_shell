@@ -19,9 +19,22 @@ int main(int ac, char **av, char **env)
 	int size = 1, kiddo = 0, stat = 0;
 	char *arg[] = {"" ,NULL};
 	size_t len = 33;
-	(void)ac;
-	(void)av;
-	(void)env;
+
+	if (ac == 1)
+	{
+		arg[0] = av[1];
+	}
+	else if (ac > 1)
+	{
+		int i, j = 2;
+
+		arg[0] = av[1];
+		for (i = 1; i < ac - 2)
+		{
+			arg[i] = av[j];
+		}
+	}
+
 	while (1)
 	{
 		size = getline(&buff, &len, stdin);
