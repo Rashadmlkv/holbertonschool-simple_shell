@@ -29,7 +29,7 @@ int main(int ac, char **av, char **env)
 		int i, j = 2;
 
 		arg[0] = av[1];
-		for (i = 1; i < ac - 2)
+		for (i = 1; i < ac - 2; i++)
 		{
 			arg[i] = av[j];
 		}
