@@ -33,15 +33,15 @@ int main(int ac, char **av, char **env)
 	while (1)  /* interactive mode */
 	{
 		size = getline(&buff, &len, stdin);
+		if (*buff == *ext)
+		{
+			free(buff);
+			exit(0);
+		}
 		if (size == -1)
 		{
 			free(buff);
 			exit(2);
-		}
-		else if (size == -1 && *buff == *ext)
-		{
-			free(buff);
-			exit(0);
 		}
 		else if (buff == NULL)
 			free(buff);
