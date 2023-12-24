@@ -8,7 +8,7 @@ int exec(char *str,char *arg[])
 {
 	if(str[0] == '/')
 		execve(str, arg, environ);
-	return (0);
+	return (2);
 }
 int main(int ac, char **av, char **env)
 {
@@ -36,7 +36,7 @@ int main(int ac, char **av, char **env)
 		if (size == -1)
 		{
 			free(buff);
-			exit(0);
+			exit(2);
 		}
 		else if (buff == NULL)
 			free(buff);
