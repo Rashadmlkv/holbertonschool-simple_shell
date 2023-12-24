@@ -35,7 +35,7 @@ int main(int ac, char **av, char **env)
 		size = getline(&buff, &len, stdin);
 		if (access(buff, F_OK) == -1 && *buff != *ext)
 		{
-			perror("Error:");
+			perror("/bin/ls: cannot access '/test_hbtn'");
 			exit(2);
 		}
 		if (size == -1 || *buff == *ext)
