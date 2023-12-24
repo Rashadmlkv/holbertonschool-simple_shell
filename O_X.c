@@ -12,7 +12,7 @@ int exec(char *str,char *arg[])
 }
 int main(int ac, char **av, char **env)
 {
-	char *buff = NULL, *token = NULL;
+	char *buff = NULL, *token = NULL, *ext = "exit";
 	int size = 1, kiddo = 0, stat = 0, incr;
 	char *arg[] = {"" ,NULL};
 	size_t len = 33;
@@ -37,6 +37,11 @@ int main(int ac, char **av, char **env)
 		{
 			free(buff);
 			exit(2);
+		}
+		else if (size == -1 && *buff == *ext)
+		{
+			free(buff);
+			exit(0);
 		}
 		else if (buff == NULL)
 			free(buff);
