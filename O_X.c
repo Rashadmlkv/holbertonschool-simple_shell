@@ -14,21 +14,21 @@ int exec(char *str,char *argv[])
 
 int main(int ac, char **av, char **env)
 {
-	char *buff = NULL, *token = NULL, *ext = "exit";
+	char *buff = NULL, *token = NULL, *ext = "exit", *temp;
 	int size = 1, kiddo = 0, stat = 0, incr;
 	char *arg[] = {"" ,NULL};
 	size_t len = 33;
 	(void)env;
 
-if (ac > 1)
-{
-    buff = av[1];
-    for (incr = 0; incr < ac; incr++)
-    {
-        arg[incr] = av[incr+1];
-    }
-    exec(buff,arg);
-}
+	if (ac > 1)
+	{
+		buff = av[1];
+		for (incr = 0; incr < ac; incr++)
+		{
+			arg[incr] = av[incr+1];
+		}
+		exec(buff,arg);
+	}
 
 
 	while (1)
@@ -42,8 +42,8 @@ if (ac > 1)
 		}
 		else if (buff == NULL)
 			free(buff);
-/*		else if (buff[size - 1] == '\n')
-			buff[size - 1] = '\0';*/
+		else if (buff[size - 1] != 'n')
+			buff[size + 1] = '\0';
 
 		kiddo = fork();
 		if (kiddo == -1)
@@ -65,8 +65,11 @@ if (ac > 1)
 				token = strtok(buff, " \n");
 				while (token != NULL)
 				{
-					exec(token, arg);
+					temp = token;
 					token = strtok(NULL, " \n");
+					arg[0] = temp;
+					arg[1] = token;
+					exec(temp, arg);
 				}
 			}
 		}
