@@ -1,4 +1,11 @@
-#include "O_X.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
 
 /**
  * main - program
@@ -6,7 +13,7 @@
  */
 char **environ;
 
-int isdash(char *str,char *argv[])
+int exec(char *str,char *argv[])
 {
 	if(str[0] == '/')
 		execve(str, argv, environ);
@@ -19,21 +26,18 @@ int main(int ac, char **av, char **env)
 	int size = 1, kiddo = 0, stat = 0;
 	char *arg[] = {"" ,NULL};
 	size_t len = 33;
+	(void)env;
 
-	if (ac == 1)
-	{
-		arg[0] = av[1];
-	}
-	else if (ac > 1)
-	{
-		int i, j = 2;
+if (ac > 0)
+{
+    buff = av[1];
+    for (;stat < ac; stat++)
+    {
+        arg[stat] = av[stat+1];
+    }
+    exec(buff,arg);
+}
 
-		arg[0] = av[1];
-		for (i = 1; i < ac - 2; i++)
-		{
-			arg[i] = av[j];
-		}
-	}
 
 	while (1)
 	{
@@ -56,7 +60,6 @@ int main(int ac, char **av, char **env)
 		{
 			if (buff[0] == '.')
 			{
-				hcp();
 			        arg[0] = "./hbtn_ls";
 				arg[1] = "/var";
 				arg[2] = NULL;
@@ -67,7 +70,7 @@ int main(int ac, char **av, char **env)
 				token = strtok(buff, " \n");
 				while (token != NULL)
 				{
-					isdash(token, arg);
+					exec(token, arg);
 					token = strtok(NULL, " \n");
 				}
 			}
