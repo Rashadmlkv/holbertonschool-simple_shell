@@ -8,12 +8,12 @@ int exec(char *str,char *arg[])
 {
 	if(str[0] == '/')
 		execve(str, arg, environ);
-	return (2);
+	return(-1);
 }
 int main(int ac, char **av, char **env)
 {
 	char *buff = NULL, *token = NULL, *ext = "exit";
-	int size = 1, kiddo = 0, stat = 0, incr;
+	int  size = 0, kiddo = 0, stat = 0, incr;
 	char *arg[] = {"" ,NULL};
 	size_t len = 33;
 	(void)env;
@@ -33,18 +33,15 @@ int main(int ac, char **av, char **env)
 	while (1)  /* interactive mode */
 	{
 		size = getline(&buff, &len, stdin);
-		if (*buff == *ext)
+		if (access(buff, F_OK) == -1 && *buff != *ext)
 		{
-			free(buff);
-			exit(0);
-		}
-		if (size == -1)
-		{
-			free(buff);
+			perror("/bin/ls: cannot access '/test_hbtn'");
 			exit(2);
 		}
-		else if (buff == NULL)
-			free(buff);
+		if (size == -1 || *buff == *ext)
+		{
+			exit(0);
+		}
 /*		else if (buff[size - 1] == '\n')
 			buff[size - 1] = '\0';*/
 		kiddo = fork();
@@ -55,7 +52,6 @@ int main(int ac, char **av, char **env)
 			if (buff[0] == '.')
 			{
 				hcp();
-				token = strtok(buff, " ");
 			        arg[0] = "./hbtn_ls";
 				arg[1] = "/var";
 				arg[2] = NULL;
@@ -63,7 +59,6 @@ int main(int ac, char **av, char **env)
 			}
 			else
 			{
-				token = strtok(buff, " \n");
 				arg[0] = token;
 				while (token != NULL)
 				{
