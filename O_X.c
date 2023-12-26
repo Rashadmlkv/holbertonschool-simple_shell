@@ -19,7 +19,15 @@ int main(int ac, char **av, char **env)
 	(void)env;
 
 
-      
+        if (ac > 1) /* uninteractive mode */
+	{
+		buff = av[1];
+		for (incr = 0; incr < ac; incr++)
+		{
+			arg[incr] = av[incr+1];
+		}
+		exec(buff,arg);
+	}
 
 
 	while (1)  /* interactive mode */
