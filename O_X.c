@@ -73,10 +73,7 @@ int main(int ac, char **av, char **env)
 				}
 			}
 		}
-		else
-		{
-			wait(&stat);
-		}
+		
 	}
 	return (0);
 }
