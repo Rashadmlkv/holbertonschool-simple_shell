@@ -59,7 +59,7 @@ int main(int ac, char **av, char **env)
 			        arg[0] = "./hbtn_ls";
 				arg[1] = "/var";
 				arg[2] = NULL;
-				
+				exec(arg[0], arg);
 			}
 			else
 			{
