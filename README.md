@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ```
 
                        _____ _   _ _____    ____    _  _____ _____ ____     ___  _____ 
@@ -69,3 +70,6 @@ You need to make sure that this shell tested and garantees work based on `gcc-4.
 ## Authors
 Farid Hashimzada - Software developer - [Linkedin](https://www.linkedin.com/in/farid-hashimzade/)`
 Rashad Malikov - Software developer & linux system developer - [Linkedin](https://www.linkedin.com/in/Rashad Malikov/)
+=======
+Simple Shell school project.
+>>>>>>> 5a1d54e99265868335562bad04c81461b5af7471
