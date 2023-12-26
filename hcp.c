@@ -32,7 +32,7 @@ int hcp(void)
 	while (r > 0)
 	{
 		r = read(fd2, buf, BUFFER_SIZE);
-		w = write(fd, buf, r);
+		w = write(fd, buf, w);
 		if (r == -1)
 		{
 			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
