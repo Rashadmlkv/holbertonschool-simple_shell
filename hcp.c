@@ -42,8 +42,7 @@ int hcp(void)
 			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to), exit(99);
 	}
 	c = close(fd);
-	if (c == -1)
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd), exit(100);
+	
 	free(buf);
 	return (0);
 }
