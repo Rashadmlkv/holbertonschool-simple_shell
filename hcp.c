@@ -28,7 +28,7 @@ int hcp(void)
 		exit(98);
 	}
 	umask(0);
-	fd = open(file_to, O_TRUNC | O_CREAT | O_WRONLY, 0777);
+	
 	while (r > 0)
 	{
 		r = read(fd2, buf, BUFFER_SIZE);
