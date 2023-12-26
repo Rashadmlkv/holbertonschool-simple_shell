@@ -55,15 +55,6 @@ You need to make sure that this shell tested and garantees work based on `gcc-4.
 * Support the history feature
 * Support the file input
 
-## Builtins
-* The exit builtin `exit [STATUS]`
-* The change directory `cd [DIRECTORY] | [OPTION]`
-* Display the environnment variables `env`
-* Initialize a new environnment variables or created if not match `setenv [VARIABLE] [VALUE]`
-* Remove an environnment variable `unsetenv [VARIABLE]`
-* Support the aliases `alias [name [='value'] ...]`
-* Display help `help [BUILTIN]`
-* Display history `history`
 
 
 
