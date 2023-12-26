@@ -17,9 +17,7 @@
 
 int copier(void)
 {
-	int fd, fd2, r = 1, w, c;
-	char *buf = malloc(BUFFER_SIZE);
-	char *file_from = "/bin/ls", *file_to = "hbtn_ls";
+	
 
 	fd2 = open(file_from, O_RDONLY);
 	if (fd2 == -1)
