@@ -18,7 +18,7 @@ int exec(char *str,char *arg[])
 
 	    if (path == NULL)
 	    {
-		    fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+		    fprintf(stderr, "./hsh: 1: %s: not found\n", arg[0]);
 		    free(command);
 		    exit(127);
 	    }
@@ -27,7 +27,7 @@ int exec(char *str,char *arg[])
             while (token != NULL)
             {
                 char executable_path[256];
-                snprintf(executable_path, sizeof(executable_path), "%s/%s", token, args[0]);
+                snprintf(executable_path, sizeof(executable_path), "%s/%s", token, arg[0]);
 
                 if (access(executable_path, X_OK) == 0)
                 {
