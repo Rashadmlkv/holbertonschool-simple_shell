@@ -31,6 +31,7 @@ int checkcommand(void) /* get and check commands */
 		}
 		else /* find and exec */
 		{
+			printf("aa\n");
 			splitcommand(buff, ":");
 		}
 	}
@@ -41,13 +42,13 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 	int i;
 	char *token = NULL, *path = NULL, *filename = NULL, *token2 = NULL;
 	char *arg[] = {"" , NULL};
+	char abspath[128];
 
 	printf("strtok\n");
 	token2 = strtok(str, " \n");
 	filename = token2;
 	if (strcmp(stri, ":") != 0)
 	{
-		printf("ss\n");
 		for (i = 0; token2 != NULL; i++)
 		{
 			printf("Girmemeli\n");
@@ -62,21 +63,29 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 
 
 	path = getenv("PATH");
-	for (i = 1; token2 != NULL; i++)
+	for (i = 0; token2 != NULL; i++)
 	{
 		arg[i] = token2;
-		token2 = strtok(str, " \n");
+		token2 = strtok(NULL, " \n");
 	}
 	token = strtok(path, stri);
-        arg[0] = strcat(token, filename);
-
+	abspath = strcat(pathpath, "/");
+	arg[0] = strcat(abspath, filename);
 	while (token != NULL)
 	{
-		if (access(arg[0], X_OK) != -1)
+		printf("%s\n", token);
+		if (access(arg[0], F_OK) != -1)
+		{
+			printf("access\n");
 			creatprocs(arg);
+			return (0);
+		}
+		printf("ife girmeyib\n");
 		token = strtok(NULL, stri);
-		arg[0] = strcat(token, filename);
+		abspath = strcat(token, "/");
+		arg[0] = strcat(abspath, filename);
 	}
+	return (0);
 }
 
 int creatprocs(char *arg[])
