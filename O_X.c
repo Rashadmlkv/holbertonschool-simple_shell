@@ -13,35 +13,35 @@ int exec(char *str,char *arg[])
 	}
 	else
         {
-            char *path = getenv("PATH");
-	    char *token;
+		char *path = getenv("PATH");
+		char *token;
 
-	    if (path == NULL)
-	    {
-		    fprintf(stderr, "./hsh: 1: %s: not found\n", arg[0]);
-		    free(command);
-		    exit(127);
-	    }
+		if (path == NULL)
+		{
+			fprintf(stderr, "./hsh: 1: %s: not found\n", arg[0]);
+			free(path);
+			exit(127);
+		}
 
-            token = strtok(path, ":");
-            while (token != NULL)
-            {
-                char executable_path[256];
-                snprintf(executable_path, sizeof(executable_path), "%s/%s", token, arg[0]);
+		token = strtok(path, ":");
+		while (token != NULL)
+		{
+			char executable_path[256];
+			snprintf(executable_path, sizeof(executable_path), "%s/%s", token, arg[0]);
 
-                if (access(executable_path, X_OK) == 0)
-                {
-                    if (execve(executable_path, args, environ) == -1)
-                    {
-                        perror("execve");
-                        free(command);
-                        exit(EXIT_FAILURE);
-                    }
-                }
-
-                token = strtok(NULL, ":");
-            }
-        }
+			if (access(executable_path, X_OK) == 0)
+			{
+				if (execve(executable_path, arg, environ) == -1)
+				{
+					perror("execve");
+					free(path);
+					exit(EXIT_FAILURE);
+				}
+		        }
+			token = strtok(NULL, ":");
+		}
+	}
+	return 0;
 }
 int main(int ac, char **av, char **env)
 {
