@@ -45,5 +45,6 @@ int copier(void)
 	if (c == -1)
 		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd), exit(100);
 	free(buf);
+	
 	return (0);
 }
