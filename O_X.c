@@ -15,20 +15,17 @@ int exec(char *str,char *arg[])
         {
 		char *path = getenv("PATH");
 		char *token;
-
 		if (path == NULL)
 		{
 			fprintf(stderr, "./hsh: 1: %s: not found\n", arg[0]);
 			free(path);
 			exit(127);
 		}
-
 		token = strtok(path, ":");
 		while (token != NULL)
 		{
 			char executable_path[256];
 			snprintf(executable_path, sizeof(executable_path), "%s/%s", token, arg[0]);
-
 			if (access(executable_path, X_OK) == 0)
 			{
 				if (execve(executable_path, arg, environ) == -1)
@@ -62,12 +59,12 @@ int main(int ac, char **av, char **env)
 	while (1)  /* interactive mode */
 	{
 		size = getline(&buff, &len, stdin);
-		if (access(buff, F_OK) == -1 && *buff != *ext)
+		/*if (access(buff, F_OK) == -1 && *buff != *ext)
 		{
 			free(buff);
 			perror("/bin/ls: cannot access '/test_hbtn'");
 			exit(2);
-		}
+			}*/
 		if (size == -1 || *buff == *ext)
 		{
 			free(buff);
