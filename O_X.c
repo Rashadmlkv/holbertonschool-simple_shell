@@ -4,104 +4,116 @@
  * Return: 0 on success, -1 on fail
  */
 char **environ;
-int exec(char *str,char *arg[])
+int checkcommand(void) /* get and check commands */
 {
-	if(str[0] == '/')
+	int size = 0;
+	size_t len = 0;
+	char *buff = NULL;
+	char *ext = "exit";
+
+	size = getline(&buff, &len, stdin);
+	printf("getline\n");
+	if (size == -1 || buff == ext)
 	{
-		execve(str, arg, environ);
-	return(-1);
+		free (buff);
+		exit(0);
 	}
 	else
-        {
-		char *path = getenv("PATH");
-		char *token;
-		if (path == NULL)
+	{
+		if (buff[0] == '.')  /* copy and exec */
 		{
-			fprintf(stderr, "./hsh: 1: %s: not found\n", arg[0]);
-			free(path);
-			exit(127);
+			hcp();
+			splitcommand(buff, " \n");
 		}
-		token = strtok(path, ":");
-		while (token != NULL)
+		else if (buff[0] == '/') /* exec from dir */
 		{
-			char executable_path[256];
-			snprintf(executable_path, sizeof(executable_path), "%s/%s", token, arg[0]);
-			if (access(executable_path, X_OK) == 0)
-			{
-				if (execve(executable_path, arg, environ) == -1)
-				{
-					perror("execve");
-					free(path);
-					exit(EXIT_FAILURE);
-				}
-		        }
-			token = strtok(NULL, ":");
+			splitcommand(buff, " \n");
+		}
+		else /* find and exec */
+		{
+			splitcommand(buff, ":");
 		}
 	}
-	return 0;
 }
+
+int splitcommand(char *str, char *stri)  /* split and put in array */
+{
+	int i;
+	char *token = NULL, *path = NULL, *filename = NULL, *token2 = NULL;
+	char *arg[] = {"" , NULL};
+
+	printf("strtok\n");
+	token2 = strtok(str, " \n");
+	filename = token2;
+	if (strcmp(stri, ":") != 0)
+	{
+		printf("ss\n");
+		for (i = 0; token2 != NULL; i++)
+		{
+			printf("Girmemeli\n");
+			arg[i] = token2;
+			token2 = strtok(NULL, stri);
+		}
+		arg[i] = NULL;
+		creatprocs(arg);
+		return (0);
+	}
+
+
+
+	path = getenv("PATH");
+	for (i = 1; token2 != NULL; i++)
+	{
+		arg[i] = token2;
+		token2 = strtok(str, " \n");
+	}
+	token = strtok(path, stri);
+        arg[0] = strcat(token, filename);
+
+	while (token != NULL)
+	{
+		if (access(arg[0], X_OK) != -1)
+			creatprocs(arg);
+		token = strtok(NULL, stri);
+		arg[0] = strcat(token, filename);
+	}
+}
+
+int creatprocs(char *arg[])
+{
+	int status = 0, pid = 0;
+
+	printf("pid\n");
+	pid = fork();
+
+	if (pid == -1)
+		perror("Process error");
+	else if (pid == 0)
+		exec(arg);
+	else
+		wait(&status);
+	return (0);
+}
+
+int exec(char* arg[])
+{
+	printf("exec\n");
+	execve(arg[0], arg, environ);
+	return (-1);
+}
+
 int main(int ac, char **av, char **env)
 {
-	char *buff = NULL, *token = NULL, *ext = "exit";
-	int  size = 0, kiddo = 0, stat = 0, incr;
-	char *arg[] = {"" ,NULL};
-	size_t len = 33;
-	(void)env;
-        if (ac > 1) /* uninteractive mode */
+	/* uninteractive mode */
+	if (ac > 1)
 	{
-		buff = av[1];
-		for (incr = 0; incr < ac; incr++)
-		{
-			arg[incr] = av[incr+1];
-		}
-		exec(buff,arg);
+		;
 	}
-	while (1)  /* interactive mode */
+
+	/* interactive mode */
+	while (1)
 	{
-		size = getline(&buff, &len, stdin);
-		/*if (access(buff, F_OK) == -1 && *buff != *ext)
-		{
-			free(buff);
-			perror("/bin/ls: cannot access '/test_hbtn'");
-			exit(2);
-			}*/
-		if (size == -1 || *buff == *ext)
-		{
-			free(buff);
-			exit(0);
-		}
-		token = strtok(buff, " \n");
-/*		else if (buff[size - 1] == '\n')
-			buff[size - 1] = '\0';*/
-		kiddo = fork();
-		if (kiddo == -1)
-			printf("Process error!\n");
-		if (kiddo == 0)
-		{
-			if (buff[0] == '.')
-			{
-				hcp();
-			        arg[0] = "./hbtn_ls";
-				arg[1] = "/var";
-				arg[2] = NULL;
-				exec(arg[0], arg);
-			}
-			else
-			{
-				arg[0] = token;
-				while (token != NULL)
-				{
-					token = strtok(NULL, " \n");
-					arg[1] = token;
-					arg[2] = NULL;
-					exec(arg[0], arg);
-				}
-			}
-		}
-		else
-		{
-			wait(&stat);
-		}
+		checkcommand();
 	}
 	return (0);
 }
