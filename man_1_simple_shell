@@ -4,8 +4,7 @@ hsh \- Holberton Shell
 .SH SYNOPSIS
 .B hsh
 [command] [options ...]
-.SH COPYRIGHT
-hsh \- is a holberton school first trimester project
+
 .SH DESCRIPTION
 .B hsh
 is a shell command interpreter that executes command read from the standard input or from file.
