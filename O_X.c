@@ -10,6 +10,7 @@ void checkcommand(void) /* get and check commands */
 	size_t len = 0;
 	char *buff = NULL;
 	char *ext = "exit", *env = "env";
+	char **envi = environ;
 
 	size = getline(&buff, &len, stdin);
 	if (size == -1 || buff == ext)
@@ -28,9 +29,8 @@ void checkcommand(void) /* get and check commands */
 			splitcommand(buff, " \n"); }
 	        else if (*buff == *env)
 		{
-			char **envi = environ;
-
-			for (; *envi; envi++) {
+			for (; *envi; envi++)
+			{
 				printf("%s\n", *envi);
 			}
 		}
@@ -67,6 +67,10 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 			if (access(arg[0], X_OK) != -1)
 			{
 				creatprocs(arg);
+				free(token);
+				free(token2);
+				free(filename);
+				free(path);
 				return (0); }
 			token = strtok(NULL, stri);
 		}
@@ -79,7 +83,7 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 	free(path);
 	return (0);
 }
-
+/* https://www.youtube.com/watch?v=k85mRPqvMbE */
 int creatprocs(char *arg[])
 {
 	int status = 0, pid = 0;
