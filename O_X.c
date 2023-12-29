@@ -74,7 +74,7 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 				return (0); }
 			token = strtok(NULL, stri);
 		}
-		write(2, "./hsh: 1: ls: not found\n", 24);
+		fprintf(stderr, "./hsh: 1: %s: not found", filename);
 	}
 	else
 		creatprocs(arg);
