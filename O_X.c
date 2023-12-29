@@ -9,7 +9,8 @@ void checkcommand(void) /* get and check commands */
 	int size = 0;
 	size_t len = 0;
 	char *buff = NULL;
-	char *ext = "exit";
+	char *ext = "exit", *env = "env";
+	char *envi = NULL;
 
 	size = getline(&buff, &len, stdin);
 	if (size == -1 || buff == ext)
@@ -26,6 +27,11 @@ void checkcommand(void) /* get and check commands */
 		else if (buff[0] == '/') /* exec from dir */
 		{
 			splitcommand(buff, " \n"); }
+		else if (*buff == *env)
+		{
+			envi = getenv("PWD");
+			printf("%s\n", envi);
+		}
 		else /* find and exec */
 		{
 			splitcommand(buff, ":"); }
@@ -66,6 +72,9 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 	}
 	else
 		creatprocs(arg);
+	free(token);
+	free(token2);
+	free(filename);
 	return (0);
 }
 
