@@ -3,13 +3,14 @@
  * main - program
  * Return: 0 on success, -1 on fail
  */
-char **environ;
-int checkcommand(void) /* get and check commands */
+extern char **environ;
+void checkcommand(void) /* get and check commands */
 {
 	int size = 0;
 	size_t len = 0;
 	char *buff = NULL;
-	char *ext = "exit";
+	char *ext = "exit", *env = "env";
+	char **envi = environ;
 
 	size = getline(&buff, &len, stdin);
 	if (size == -1 || buff == ext)
@@ -26,6 +27,14 @@ int checkcommand(void) /* get and check commands */
 		else if (buff[0] == '/') /* exec from dir */
 		{
 			splitcommand(buff, " \n"); }
+	        else if (*buff == *env)
+		{
+			for (; *envi; envi++)
+			{
+				printf("%s\n", *envi);
+			}
+			free(*envi);
+		}
 		else /* find and exec */
 		{
 			splitcommand(buff, ":"); }
@@ -47,8 +56,6 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 		token2 = strtok(NULL, " \n"); }
 	arg[i] = NULL;
 
-
-
 	if (strcmp(stri, ":") == 0)
 	{
 		path = getenv("PATH");
@@ -61,10 +68,13 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 			if (access(arg[0], X_OK) != -1)
 			{
 				creatprocs(arg);
+				free(token);
+				free(token2);
+				free(filename);
+				free(path);
 				return (0); }
 			token = strtok(NULL, stri);
 		}
-		perror("Error");
 	}
 	else
 		creatprocs(arg);
@@ -74,7 +84,7 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 	free(path);
 	return (0);
 }
-
+/* https://www.youtube.com/watch?v=k85mRPqvMbE */
 int creatprocs(char *arg[])
 {
 	int status = 0, pid = 0;
@@ -96,18 +106,19 @@ int exec(char* arg[])
 	return (-1);
 }
 
-int main(int ac, char **av, char **env)
+int main(int ac, char **av)
 {
-	/* uninteractive mode */
 	if (ac > 1)
 	{
-		;
+		av++;
+		splitcommand(*av, " :\n");
 	}
-
-	/* interactive mode */
-	while (1)
+	else
 	{
-		checkcommand();
+		while (1)
+		{
+			checkcommand();
+		}
 	}
 	return (0);
 }
