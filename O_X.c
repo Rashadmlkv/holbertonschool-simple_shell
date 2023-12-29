@@ -34,6 +34,7 @@ void checkcommand(void) /* get and check commands */
 				printf("%s\n", *envi);
 			}
 			free(*envi);
+			free(buff);
 		}
 		else /* find and exec */
 		{
