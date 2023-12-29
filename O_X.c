@@ -12,7 +12,6 @@ int checkcommand(void) /* get and check commands */
 	char *ext = "exit";
 
 	size = getline(&buff, &len, stdin);
-	printf("getline\n");
 	if (size == -1 || buff == ext)
 	{
 		free (buff);
@@ -23,68 +22,56 @@ int checkcommand(void) /* get and check commands */
 		if (buff[0] == '.')  /* copy and exec */
 		{
 			hcp();
-			splitcommand(buff, " \n");
-		}
+			splitcommand(buff, " \n"); }
 		else if (buff[0] == '/') /* exec from dir */
 		{
-			splitcommand(buff, " \n");
-		}
+			splitcommand(buff, " \n"); }
 		else /* find and exec */
 		{
-			printf("aa\n");
-			splitcommand(buff, ":");
-		}
+			splitcommand(buff, ":"); }
 	}
 }
 
 int splitcommand(char *str, char *stri)  /* split and put in array */
 {
 	int i;
-	char *token = NULL, *path = NULL, *filename = NULL, *token2 = NULL;
+	char *token = NULL, *token2 = NULL, *filename = NULL, *path = NULL;
+	char abspath[128], cpypath[128];
 	char *arg[] = {"" , NULL};
-	char abspath[128];
 
-	printf("strtok\n");
 	token2 = strtok(str, " \n");
 	filename = token2;
-	if (strcmp(stri, ":") != 0)
-	{
-		for (i = 0; token2 != NULL; i++)
-		{
-			printf("Girmemeli\n");
-			arg[i] = token2;
-			token2 = strtok(NULL, stri);
-		}
-		arg[i] = NULL;
-		creatprocs(arg);
-		return (0);
-	}
-
-
-
-	path = getenv("PATH");
 	for (i = 0; token2 != NULL; i++)
-	{
+        {
 		arg[i] = token2;
-		token2 = strtok(NULL, " \n");
-	}
-	token = strtok(path, stri);
-	abspath = strcat(pathpath, "/");
-	arg[0] = strcat(abspath, filename);
-	while (token != NULL)
+		token2 = strtok(NULL, " \n"); }
+	arg[i] = NULL;
+
+
+
+	if (strcmp(stri, ":") == 0)
 	{
-		printf("%s\n", token);
-		if (access(arg[0], F_OK) != -1)
+		path = getenv("PATH");
+	        snprintf(cpypath, sizeof(cpypath), "%s", path);
+		token = strtok(cpypath, stri);
+		while (token != NULL)
 		{
-			printf("access\n");
-			creatprocs(arg);
-			return (0);
+			snprintf(abspath, sizeof(abspath), "%s/%s", token, filename);
+			arg[0] = abspath;
+			if (access(arg[0], X_OK) != -1)
+			{
+				creatprocs(arg);
+				return (0); }
+			token = strtok(NULL, stri);
 		}
-		printf("ife girmeyib\n");
-		token = strtok(NULL, stri);
-		abspath = strcat(token, "/");
-		arg[0] = strcat(abspath, filename);
+		perror("Error");
 	}
+	else
+		creatprocs(arg);
+	free(token);
+	free(token2);
+	free(filename);
+	free(path);
 	return (0);
 }
 
@@ -92,7 +79,6 @@ int creatprocs(char *arg[])
 {
 	int status = 0, pid = 0;
 
-	printf("pid\n");
 	pid = fork();
 
 	if (pid == -1)
@@ -106,7 +92,6 @@ int creatprocs(char *arg[])
 
 int exec(char* arg[])
 {
-	printf("exec\n");
 	execve(arg[0], arg, environ);
 	return (-1);
 }
