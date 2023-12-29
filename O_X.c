@@ -24,7 +24,7 @@ void checkcommand(void) /* get and check commands */
 		{
 			hcp();
 			splitcommand(buff, " \n"); }
-		else if (buff[0] == '/') /* exec from dir */
+		else if (buff[0] == '/' || buff[0] == '\n') /* exec from dir */
 		{
 			splitcommand(buff, " \n"); }
 	        else if (*buff == *env)
@@ -66,24 +66,18 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 		{
 			snprintf(abspath, sizeof(abspath), "%s/%s", token, filename);
 			arg[0] = abspath;
-			if (access(arg[0], X_OK) != -1)
-			{
+			if (access(arg[0], X_OK) == 0)
+		        {
 				creatprocs(arg);
-				free(token);
-				free(token2);
-				free(filename);
-				free(path);
 				return (0); }
 			token = strtok(NULL, stri);
 		}
-		printf("./hsh: 1: hbtn: not found\n");
 	}
 	else
 		creatprocs(arg);
 	free(token);
 	free(token2);
 	free(filename);
-	free(path);
 	return (0);
 }
 /* https://www.youtube.com/watch?v=k85mRPqvMbE */
@@ -105,7 +99,7 @@ int creatprocs(char *arg[])
 int exec(char* arg[])
 {
 	execve(arg[0], arg, environ);
-	return (-1);
+	return (0);
 }
 
 int main(int ac, char **av)
