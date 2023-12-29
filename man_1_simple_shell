@@ -51,7 +51,11 @@ command1 || command2
 command2 is executed if and only if command1 returns a non-zero exit status.  The return status of AND and OR lists is the exit status of the last command executed in the list.
 .SH AUTHORS
 Farid Hashimzada \- Holberton School Software Engineer Student
+<<<<<<< HEAD
 Rashad Malikov /- Holberton School Software Engineer Student
+=======
+Rashad Malikov \- Holberton School Software Engineer Student
+>>>>>>> f5e8b453d789b9bc45dd3f0a61febf5d50add47f
 .SH VERSIONS
 .B hsh
 V1.0.0
