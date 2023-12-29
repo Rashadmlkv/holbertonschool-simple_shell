@@ -84,6 +84,8 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 		creatprocs(arg);
 	free(token);
 	free(token2);
+	if (filename != NULL)
+		free(filename);
 	return (0);
 }
 /* https://www.youtube.com/watch?v=k85mRPqvMbE */
