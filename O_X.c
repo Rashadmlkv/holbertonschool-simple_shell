@@ -69,9 +69,12 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 			if (access(arg[0], X_OK) == 0)
 		        {
 				creatprocs(arg);
+				free(token2);
+				free(filename);
 				return (0); }
 			token = strtok(NULL, stri);
 		}
+		write(2, "./hsh: 1: ls: not found\n", 24);
 	}
 	else
 		creatprocs(arg);
