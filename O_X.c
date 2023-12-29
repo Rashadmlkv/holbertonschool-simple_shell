@@ -24,7 +24,7 @@ void checkcommand(void) /* get and check commands */
 		{
 			hcp();
 			splitcommand(buff, " \n"); }
-		else if (buff[0] == '/' || buff[0] == ' ') /* exec from dir */
+		else if (buff[0] == '/' || (buff[0] == ' ' && sizeof(*buff) > 10)) /* exec from dir */
 		{
 			splitcommand(buff, " \n"); }
 	        else if (*buff == *env)
