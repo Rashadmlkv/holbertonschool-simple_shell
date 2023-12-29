@@ -4,7 +4,7 @@
  * Return: 0 on success, -1 on fail
  */
 char **environ;
-int checkcommand(void) /* get and check commands */
+void checkcommand(void) /* get and check commands */
 {
 	int size = 0;
 	size_t len = 0;
@@ -47,8 +47,6 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 		token2 = strtok(NULL, " \n"); }
 	arg[i] = NULL;
 
-
-
 	if (strcmp(stri, ":") == 0)
 	{
 		path = getenv("PATH");
@@ -68,10 +66,6 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 	}
 	else
 		creatprocs(arg);
-	free(token);
-	free(token2);
-	free(filename);
-	free(path);
 	return (0);
 }
 
@@ -96,18 +90,19 @@ int exec(char* arg[])
 	return (-1);
 }
 
-int main(int ac, char **av, char **env)
+int main(int ac, char **av)
 {
-	/* uninteractive mode */
 	if (ac > 1)
 	{
-		;
+		av++;
+		splitcommand(*av, " :\n");
 	}
-
-	/* interactive mode */
-	while (1)
+	else
 	{
-		checkcommand();
+		while (1)
+		{
+			checkcommand();
+		}
 	}
 	return (0);
 }
