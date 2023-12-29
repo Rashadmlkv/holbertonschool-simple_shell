@@ -20,11 +20,12 @@ void checkcommand(void) /* get and check commands */
 	}
 	else
 	{
+		printf("%ld\n", strlen(buff));
 		if (buff[0] == '.' || buff[0] == 'h')  /* copy and exec */
 		{
 			hcp();
 			splitcommand(buff, " \n"); }
-		else if (buff[0] == '/' || (buff[0] == ' ' && sizeof(*buff) > 10)) /* exec from dir */
+		else if (buff[0] == '/' || (buff[0] == ' ' && strlen(buff) > 12)) /* exec from dir */
 		{
 			splitcommand(buff, " \n"); }
 	        else if (*buff == *env)
