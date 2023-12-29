@@ -24,7 +24,7 @@ void checkcommand(void) /* get and check commands */
 		{
 			hcp();
 			splitcommand(buff, " \n"); }
-		else if (buff[0] == '/' || buff[0] == '\n') /* exec from dir */
+		else if (buff[0] == '/' || buff[0] == ' ') /* exec from dir */
 		{
 			splitcommand(buff, " \n"); }
 	        else if (*buff == *env)
@@ -84,7 +84,6 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 		creatprocs(arg);
 	free(token);
 	free(token2);
-	free(filename);
 	return (0);
 }
 /* https://www.youtube.com/watch?v=k85mRPqvMbE */
@@ -113,6 +112,8 @@ int main(int ac, char **av)
 {
 	if (ac > 1)
 	{
+		if (av[1][0] == '\n')
+			av[1][0] = ' ';
 		av++;
 		splitcommand(*av, " :\n");
 	}
