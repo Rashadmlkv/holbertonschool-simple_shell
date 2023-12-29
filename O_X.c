@@ -76,6 +76,7 @@ int splitcommand(char *str, char *stri)  /* split and put in array */
 				return (0); }
 			token = strtok(NULL, stri);
 		}
+		printf("./hsh: 1: hbtn: not found\n");
 	}
 	else
 		creatprocs(arg);
