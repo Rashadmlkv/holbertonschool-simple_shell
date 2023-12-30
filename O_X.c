@@ -20,7 +20,7 @@ void checkcommand(void) /* get and check commands */
 	}
 	else
 	{
-		if (buff[0] == '.' || (buff[0] == ' ' && strlen(buff) > 12))  /* copy and exec */
+		if (buff[0] == '.' || (buff[0] == ' ' && strlen(buff) > 11))  /* copy and exec */
 		{
 			hcp();
 			splitcommand(buff, " \n"); }
