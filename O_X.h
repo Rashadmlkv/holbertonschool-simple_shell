@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef O_X_H
+#define O_X_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,20 +19,4 @@ int execute_command(char *command);
 void search_and_execute(char *args[], char *command);
 int main(void);
 
-#endif#ifndef O_X_H
-#define O_X_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
-void checkcommand(void);
-int splitcommand(char *str, char *stri);
-int hcp(void);
-int creatprocs(char *arg[]);
-int exec(char* arg[]);
 #endif
