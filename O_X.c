@@ -20,7 +20,6 @@ void checkcommand(void) /* get and check commands */
 	}
 	else
 	{
-		printf("%ld\n", strlen(buff));
 		if (buff[0] == '.' || buff[0] == 'h')  /* copy and exec */
 		{
 			hcp();
